@@ -32,6 +32,8 @@ Most chart tools hand you "Bullish" and stop there. Chartist checks itself.
 
 You need Python 3.10 or newer. There is nothing to `pip install`.
 
+![How to run Chartist on Windows](docs/setup-windows.png)
+
 ```bash
 git clone https://github.com/adityasingh1004/chartist-india.git
 cd chartist-india
