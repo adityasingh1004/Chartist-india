@@ -1,0 +1,19 @@
+# downloaded market data and caches (never committed: see DISCLAIMER.md)
+chartist/cache/
+chartist/fundcache/
+chartist/caldata/
+chartist/data/universe.json
+chartist/data/*.tmp
+probe/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
