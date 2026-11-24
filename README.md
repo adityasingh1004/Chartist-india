@@ -15,7 +15,9 @@ Most chart tools hand you "Bullish" and stop there. Chartist checks itself.
 
 **Every signal carries its own track record on the security you are looking at.** A MACD cross or a Supertrend flip is shown next to what happened after past occurrences on that stock (5, 20 and 60 bars later) compared with an ordinary stretch. Signals that have worked against their textbook meaning are labelled that way.
 
-**The overall verdict was calibrated, and the result is published.** Across 3,474 point-in-time readings on 49 Nifty 50 stocks from 2016 to 2026 (default settings, `chartist/calibrate.py`), stocks the verdict read as bullish did **not** beat those it read as bearish: the gap over the next 60 days was −0.3 points (−0.7 and +0.1 in the two halves of the period). So the app labels the verdict as a description of the chart, not a forecast. Re-run the calibration yourself with `python chartist/calibrate.py --fetch`.
+**The overall verdict is calibrated, group by group, and the result is published.** `chartist/calibrate.py` reads the chart point-in-time (only bars up to each date, default settings) every 42 trading days for every NSE and BSE stock and every global series, then compares bullish and bearish readings with what followed over 60 days. Results are kept separately for Nifty 100, Midcap 150, Smallcap 250, the rest of NSE, NSE SME, BSE-only stocks, commodities, yields and FX, and for liquid against illiquid stocks, and the app shows the track record for the group of the security you are looking at. The first run, on 49 Nifty 50 stocks from 2016 to 2026 (3,474 readings), found no edge: bullish minus bearish was −0.3 points over 60 days. Group results from the full run: see `chartist/calibration.json`.
+
+Re-run it yourself: `calibrate.bat` on Windows, or `python chartist/calibrate.py --fetch` (add `--sample 10` for a quick test). It uses today's lists, so delisted companies are missing and every stock group is flattered; compare buckets within a group.
 
 ## What it does
 
@@ -79,7 +81,7 @@ chartist/
   fundamentals.py  NSE filings: results XBRL, shareholding, pledges, red flags
   company.py       Company tab data
   universe.py      NSE + BSE + global search lists
-  calibrate.py     point-in-time check of the verdict
+  calibrate.py     point-in-time check of the verdict, by group (calibrate.bat on Windows)
   cli.py           command-line front end
   static/          the page (single HTML file) and bundled chart library
   data/            globals.json (editable list of global tickers), Nifty 500 fallback list
@@ -93,7 +95,7 @@ tests/             offline tests on synthetic prices: python -m unittest discove
 Issues and pull requests are welcome, especially:
 
 - fixes when an NSE, BSE or Yahoo field changes (please attach the raw response: `python chartist/company.py SYMBOL --raw` or `python chartist/fundamentals.py SYMBOL --save probe --tags`);
-- calibration runs on wider universes (Nifty 500, small caps) or on commodities and yields;
+- calibration with point-in-time index membership, to remove the survivorship bias of today's lists;
 - new indicators or patterns, each with its own track record.
 
 Please keep the rules the project runs on: standard library only, no order placement, every data point traceable to a source, and say plainly when something has not worked.

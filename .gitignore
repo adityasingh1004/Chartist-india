@@ -2,6 +2,8 @@
 chartist/cache/
 chartist/fundcache/
 chartist/caldata/
+chartist/data/tiers/
+chartist/calibration-sample.json
 chartist/data/universe.json
 chartist/data/*.tmp
 probe/

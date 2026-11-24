@@ -76,5 +76,27 @@ class UniverseTests(unittest.TestCase):
         self.assertEqual(universe.glb_id("^TNX"), "GLB_TNX")
 
 
+class CalibrationTests(unittest.TestCase):
+    def test_group_of(self):
+        import calibrate
+        tiers = {"Nifty 100": ["TCS"], "Smallcap 250": ["TINY"]}
+        g = lambda i: calibrate.group_of(i, tiers, {"MIDX"})
+        self.assertEqual(g({"s": "TCS", "x": "NSE"}), "Nifty 100")
+        self.assertEqual(g({"s": "TINY", "x": "NSE"}), "Smallcap 250")
+        self.assertEqual(g({"s": "MIDX", "x": "NSE"}), "Nifty 500 (tier unknown)")
+        self.assertEqual(g({"s": "OTHER", "x": "NSE"}), "NSE outside Nifty 500")
+        self.assertEqual(g({"s": "SMEX", "x": "NSE SME"}), "NSE SME")
+        self.assertEqual(g({"s": "BSE_ABC", "x": "BSE"}), "BSE-only")
+        self.assertEqual(g({"s": "GLB_TNX", "k": "yield"}), "Global yield")
+
+    def test_summarise_too_few_and_gap(self):
+        import calibrate
+        rows = [("A", "G", "2020-01-%02d" % (i % 28 + 1), "Bullish" if i % 2 else "Bearish", 0, 0, 0, 0,
+                 0.05 if i % 2 else 0.0, False) for i in range(40)]
+        s = calibrate.summarise(rows)
+        self.assertAlmostEqual(s["bull_minus_bear_x60"], 5.0)
+        self.assertEqual(s["finding"], "too few")
+
+
 if __name__ == "__main__":
     unittest.main()

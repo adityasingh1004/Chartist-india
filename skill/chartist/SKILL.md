@@ -21,7 +21,7 @@ Chartist is a local, standard-library Python tool. This skill calls its command-
 ## Rules when reporting results
 1. Say it is an analysis tool and not an investment recommendation. Do not turn a reading into "buy" or "sell" advice, targets for the user to act on, or position sizes.
 2. Quote the track record: each signal carries how it has behaved on that security before. When a signal "has worked AGAINST its usual meaning" or shows "too few cases", say so.
-3. The verdict was calibrated on Nifty 50 stocks with default settings and did not reliably separate winners from losers. Present it as a description of the chart, not a forecast.
+3. The `calibration` field gives the verdict's track record for this security's group (`group`, `readings`, `bull_minus_bear_x60`, `finding`). Unless `finding` is "separates", present the verdict as a description of the chart, not a forecast; even then it is a modest past edge on today's lists, not a prediction.
 4. Prices come from Yahoo (unofficial, can lag). Give the data source and last bar date with any level you quote.
 5. On a yield chart, "bullish" means yields rising (bond prices falling). Futures (`=F`) are front-month continuous series: roll-date jumps are not real gaps.
 6. If the tool reports an error or too little history, report that plainly; do not fill gaps from memory.
