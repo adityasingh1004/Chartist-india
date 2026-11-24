@@ -53,7 +53,21 @@ python chartist/cli.py BZ=F --json         # Brent crude, full JSON
 python chartist/cli.py TCS --company       # company information
 ```
 
-`skill/chartist/SKILL.md` is a Claude skill that wraps the command line. Copy the `skill/chartist` folder into your Claude skills folder (for Claude Code: `~/.claude/skills/`), keep this repository on your computer, and ask Claude to "analyse the chart of HDFC Bank".
+### Use it as a Claude skill
+
+Chartist ships as a Claude skill, so you can ask Claude things like *"Read the chart of HDFC Bank"*, *"Compare Tata Steel and JSW Steel on the weekly chart"* or *"What does Brent's chart say?"*, and Claude runs the analysis on your computer and reports it with each signal's track record.
+
+**Claude Code (plugin, recommended):**
+
+```
+/plugin install chartist-india --marketplace adityasingh1004/Chartist-india
+```
+
+On older Claude Code versions, run `/plugin marketplace add adityasingh1004/Chartist-india` and then `/plugin install chartist-india@chartist-india`. Type `/chartist-india` to call it directly, or just ask about a chart.
+
+**Claude desktop app, or a skills folder:** download `chartist-india-skill.zip` from the latest release. Upload it under Settings → Capabilities → Skills, or unzip it into `~/.claude/skills/`. The zip carries the full engine, so nothing else needs installing. The skill needs to reach Yahoo Finance and NSE from where it runs, so it works when Claude runs code on your own computer (Claude Code, or the desktop app with local tools). A cloud sandbox that blocks those sites will report the fetch error instead.
+
+The skill's rules stop Claude from turning readings into buy or sell advice and make it quote each signal's track record and the data source.
 
 ## Data sources and their limits
 
@@ -84,7 +98,7 @@ chartist/
   static/          the page (single HTML file) and bundled chart library
   data/            globals.json (editable list of global tickers), Nifty 500 fallback list
 common/            IST clock, Yahoo fetch and cache format, NSE website client
-skill/chartist/    Claude skill wrapper
+skills/            Claude skill (also packaged as a Claude Code plugin via .claude-plugin/)
 tests/             offline tests on synthetic prices: python -m unittest discover tests
 ```
 
